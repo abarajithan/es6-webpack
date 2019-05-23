@@ -1,6 +1,7 @@
 // Imports
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 require("babel-register");
 // Webpack Configuration
 const config = {
@@ -9,7 +10,7 @@ const config = {
   
   // Output
   output: {
-    path: path.resolve(__dirname, './dist/js'),
+    path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js'
   },
   // Loaders
@@ -23,17 +24,26 @@ const config = {
       },
       // CSS Files
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test:/\.(s*)css$/,
+        loaders: ['style-loader','css-loader', 'sass-loader']
+      },
+      //File Loader to refer images
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i, 
+        loader: "file-loader"
       }
     ]
   },
   // Plugins
   plugins: [
     new HtmlWebpackPlugin({
-      template: './dist/index.html',
+      template: './src/index.html',
       filename: 'index.html',
       hash: true
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
     })
   ],
   watch: true,

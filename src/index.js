@@ -1,4 +1,4 @@
-import './css/main.css';
+import './styles/main.scss';
 
 window.changeDetails = () => {
     let value = {
